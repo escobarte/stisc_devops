@@ -1,0 +1,53 @@
+#!/bin/bash
+
+set -e
+
+DISK="/dev/sda"
+PART="${DISK}5"
+VG_NAME="vg_app"
+LV_NAME="lv_www"
+LV_SIZE="5G"
+MOUNT_POINT="/var/www"
+FSTAB_FILE="/etc/fstab"
+
+echo "🧱 Создаём новый раздел $PART на $DISK..."
+
+# Запускаем fdisk и создаем sda5
+sudo fdisk "$DISK" <<EOF
+n
+5
+
+
+t
+5
+8e
+w
+EOF
+
+# Обновляем таблицу разделов
+sudo partprobe
+sleep 2
+
+echo "💽 Подготовка LVM: pv → vg → lv..."
+
+# Создаём LVM
+sudo pvcreate "$PART"
+sudo vgcreate "$VG_NAME" "$PART"
+sudo lvcreate -n "$LV_NAME" -L "$LV_SIZE" "$VG_NAME"
+
+# Форматируем в ext4
+sudo mkfs.ext4 "/dev/$VG_NAME/$LV_NAME"
+
+# Создаём точку монтирования
+sudo mkdir -p "$MOUNT_POINT"
+
+# Добавляем в fstab, если ещё не прописано
+FSTAB_ENTRY="/dev/$VG_NAME/$LV_NAME $MOUNT_POINT ext4 defaults 0 2"
+if ! grep -q "$FSTAB_ENTRY" "$FSTAB_FILE"; then
+    echo "$FSTAB_ENTRY" | sudo tee -a "$FSTAB_FILE"
+fi
+
+# Монтируем
+sudo mount -a
+
+echo "✅ Готово! $MOUNT_POINT теперь использует LVM-том размером $LV_SIZE"

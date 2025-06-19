@@ -1,0 +1,72 @@
+lsblk #list information about blocks and devices (disks and other)
+fdisk #Display and manipulate disk partitions
+fdisk /dev/sdb #(n, p, 1, enter, enter, t, 8e, w)
+fstab #Файл описывает, как устройства хранения и разделы подключаются к системе и используются — указывает точки монтирования, типы файловых систем и параметры подключения.
+echo '/dev/vg_app/www /var/www ext4 defaults 0 2' | sudo tee -a /etc/fstab # Команда добавляет строку для автоподключения 
+#LVM-раздела `/dev/vg_app/www` в `/var/www` при загрузке, используя `tee` для записи в `/etc/fstab` с правами root.
+
+
+
+
+cat /var/log/apt/history.log   # to see upgrades provided 
+
+sudo apt install php php-cli php-mbstring php-xml php-bcmath php-curl php-zip php-mysql unzip curl git -y \
+&& echo -e "\nInstalled Successfully:\n" && dpkg -l | grep -E 'php|unzip|curl|git' \
+|| echo -e "\nIssues with installation" # Tracking what fiels installed what not
+
+
+tcpdump -ni ens192 #capture and display pahcete de retea pe interfata ens192 si nu incerca sa rezolvi adresele IP sau numerele de port
+
+
+sudo nano /bin/check_nginx.sh
+#!/bin/sh
+if [ -z "`pidof nginx`" ]; then
+  exit 1
+fi
+sudo chmod 755 /bin/check_nginx.sh
+
+
+
+
+
+  GNU nano 7.2                              /etc/keepalived/keepalived.conf                                        vrrp_script check_nginx {
+  script "/bin/check_nginx.sh"
+  interval 2
+  weight 50
+}
+
+vrrp_instance VI_1 {
+    state MASTER
+    interface ens192                          # ← проверь имя интерфейса через `ip a`
+    virtual_router_id 51
+    priority 100
+    advert_int 1
+
+    authentication {
+        auth_type PASS
+        auth_pass 123456
+    }
+
+    virtual_ipaddress {
+        10.100.93.2                         # ← это твой VIP
+    }
+    track_script {
+        chk_nginx
+    }
+
+
+# Чтобы узнать какой сейчас Мастер и какой Слейв
+ip a | grep 10.100.93.2
+
+Как добавить unicast: 
+/on master/ 
+  unicast_src_ip 10.100.93.3
+  unicast_peer {
+    10.100.93.4
+  }
+/On slave/
+ unicast_src_ip 10.100.93.4
+ unicast_peer {
+  10.100.93.3
+ }
+.. Restart keepalived on both ..

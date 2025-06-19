@@ -1,0 +1,41 @@
+Ethernet adapter Ethernet:
+
+   Connection-specific DNS Suffix  . :
+   Link-local IPv6 Address . . . . . : fe80::30c3:1c45:2241:88e8%11
+   IPv4 Address. . . . . . . . . . . : 172.29.31.24
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 172.29.31.1
+   
+eu fac:
++1. Prin Iptables configurarea pe Proxy (1,2)
++1.1 SSH doar peantru subretea 172.28.31.16/28 ( SAS )
++1.2 pentru ambele proxy las doar 80 si 443 port
++1.3 instalez https pentru VIP 93.2 (self-signed sau let's encrypt?)
++	Настройка HTTPS (Nginx + Let's Encrypt)
++1.4 DNS
+
+1.5 Добавить методы балансироваки:(round robin, least connection, ip hash, least time)
+
+
+2. Tuning VM-muri
+
+
+
+  /mnt/dns/bind/named.conf:9: parsing failed: file not found
+  loading configuration: file not found
+  exiting (due to fatal error)
+  
+ 
+ 
+ managed-keys.bind.jnl: open: permission denied
+ managed-keys-zone: keyfetch_done:dns_journal_open -> unexpected error
+ managed-keys-zone: error during managed-keys processing (unexpected error): DNSSEC validation may be at risk
+ 
+ find / -name managed-keys.bind.jnl
+ /var/cache/bind/managed-keys.bind.jnl
+ 
+ mnt/dns
+ 
+
+
+57474

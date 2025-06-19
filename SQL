@@ -1,0 +1,3 @@
+DROP DATABASE database_name; # remove a data 
+DROP USER 'username'@'host'; # remove a user
+SHOW DATABASES; #show all databases on server

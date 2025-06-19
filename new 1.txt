@@ -1,0 +1,37 @@
+1. LAMP / (LNMP/LEMP) - LINUX желательно Ubuntu 22/24 LTS, Apache любой тип веб сервиса, MYSQL/POSTGRE любой тип баз данных, PHP.
+Устновка и настройка желательно 2х виртуалок. На первую деплоишь любую саммую простую веб аппликацию, на вторую Nginx как reverse proxy.
+1.1 Boot process, systemd, journald
+Команды shell (awk, sed, xargs, find, grep, cut)
+Management of usage and permissions
++Управление процессами и сервисами (ps, top, systemctl, etc..)
++Настройки сети (ip, netplan, nmcli, ss, iptables, etc..)
++Настройка DNS, NTP, SSH
++Мониторинг ресурсов (CPU, RAM, disk I/O, load average, etc..)
++Управление логами (journalctl, rsyslog, logrotate)
++Apt, yum, dnf, snap
+Компилирование и установка из ресурсов
+Partition and mount
+LVM, ext4, xfs, btrfs, zfs
+Permissions, ACL, chroot
+Security
+sudo, ufw, iptables, fail2ban
+Certifcates, SSL, onpenssl
+Scritpting
+Back up and restore.
+
+2. Nginx нужно установить из source code и чтобы имели модули modesecurity and geoip2
+
+3. Кластеризация баз данных MYSQL/POSTGRE 
+
+4. Monitoring in databases (top/htop) as a services.
+4.1 Zabbix - deploy from scratch, adding hosts on that server and adding tempaltes for ajustment
+4.2 Grafana / Promehteu  - the same
+
+5. LOG - rsyslog is more simple, ELK stack / opensearch stack
+5.1 To create and config a stack from a scratch, and send logs from Nginx in ELK, where it will be posted beautifull and storaged
+
+6. Docker -  create, asamble an image, push pull on VM
+6.1 To create docker from point 1
+
+7. GIT - поднять и установить, для того чтобы понять как он работает, практика с репозиториями, брэнчи, комиты CI/CD
+Azure DevOps

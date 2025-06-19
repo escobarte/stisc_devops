@@ -1,0 +1,14 @@
+#How to SSH from [SERVER]
+sudo apt update
+sudo apt install openssh-server -y
+sudo systemctl status ssh
+sudo systemctl enable ssh
+sudo systemctl start ssh
+hostname -I
+//Open port 22 on Firewall (if UFW is running)
+sudo ufw status
+sudo ufw allow ssh
+sudo ufw reload
+
+cat /var/log/apt/history.log - to see upgrades provided
+

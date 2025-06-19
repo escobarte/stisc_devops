@@ -1,0 +1,18 @@
+Ansible
+is agentless ( you don't have to install agents to target servers )
+Ansible Module Index
+Ansible uses YAML
+
+-modules and playbooks
+-with docker
+-vs alternative tools
+
+Tool to automate IT tasks.
+
+for example: u have 10 servers, and you need to "update Docker version" on all of them. 
+or
+Repetetive tasks
+-updates, back ups, sys reboots, creating users, assign groups ...
+
+
+

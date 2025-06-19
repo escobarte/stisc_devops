@@ -1,0 +1,134 @@
+| Путь                    | Назначение                              |
+| ----------------------- | --------------------------------------- |
+| `/`                     | Корень всей системы                     |
+| `/bin`                  | Базовые команды (ls, cp, mv, bash)      |
+| `/sbin`                 | Системные утилиты                       |
+| `/etc`                  | Конфигурационные файлы                  |
+| `/home`                 | Домашние директории пользователей       |
+| `/root`                 | Домашняя директория root'а              |
+| `/var`                  | Логи, спул почты, временные базы данных |
+| `/tmp`                  | Временные файлы                         |
+| `/usr`                  | Пользовательские программы и библиотеки |
+| `/opt`                  | Сторонние приложения (например, Chrome) |
+| `/boot`                 | Ядро и загрузочные файлы                |
+| `/dev`, `/proc`, `/sys` | Виртуальные файловые системы            |
+---------------------------------------------------------------------
+
+Part1
+NAME           MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
+sda              8:0    0   20G  0 disk
+├─sda1           8:1    0    1M  0 part
+├─sda2           8:2    0  1.5G  0 part /boot
+└─sda3           8:3    0 18.5G  0 part
+  ├─OS-tmp     252:0    0    3G  0 lvm  /tmp
+  ├─OS-var_log 252:1    0    4G  0 lvm  /var/log
+  └─OS-root    252:2    0 11.5G  0 lvm  /
+sdb              8:16   0   80G  0 disk
+sr0             11:0    1 1024M  0 rom
+
+Зная структуру, у меня следующяа задача:
+Создать Партиция 1 чтобы имела LVM
+DATA-www и смонтировать на point /var/www
+Создать Партиция 2 чтобы имела LVM
+DATA-java и смонтировать на point /var/java
+
+37b90e11-6215-4e59-acd8-a2a43efb36c5 = java
+06146662-d21c-4b67-90d8-1d64637fa684 = www
+
+    1  13/05/25 16:12:35 history -w
+    2  13/05/25 16:12:35 history -w
+    3  11/06/25 14:26:29 exit
+    4  11/06/25 15:17:30 lsblk
+    5  11/06/25 15:18:38 fdisk /dev/xvdf
+    6  11/06/25 15:18:58 lsblk
+    7  11/06/25 15:20:22 f
+    8  11/06/25 15:20:32 df -h
+    9  11/06/25 15:39:19 clear
+   10  11/06/25 15:39:21 lsblk
+   11  11/06/25 15:41:54 fdisk -l /dev/sdb
+   12  11/06/25 15:45:38 sudo fdisk /dev/sdb
+   13  11/06/25 15:46:44 lsblk
+   14  11/06/25 15:49:57 sudo pvcreate /dev/sdb1
+   15  11/06/25 15:50:18 sudo vgcreate DATA /dev/sdb1
+   16  11/06/25 15:50:56 sudo lvcreate -n DATA-www -L 10G DATA
+   17  11/06/25 15:51:16 sudo lvcreate -n DATA-java -L 10G DATA
+   18  11/06/25 15:51:41 sudo mkfs.ext4 /dev/DATA/DATA-www
+   19  11/06/25 15:52:07 sudo mkfs.ext4 /dev/DATA/DATA-java
+   20  11/06/25 15:52:38 sudo mkdir -p /var/www
+   21  11/06/25 15:52:49 sudo mkdir -p /var/java
+   22  11/06/25 15:53:06 sudo mount /dev/DATA/DATA-www /var/www
+   23  11/06/25 15:53:23 sudo mount /dev/DATA/DATA-java /var/java
+   24  11/06/25 15:53:47 df -h | grep /var
+   25  11/06/25 15:54:46 sudo blkid | grep DATA
+   26  11/06/25 15:56:06 nano /etc/fstab
+   27  11/06/25 15:58:52 lsblk
+   28  11/06/25 16:00:38 history
+
+
+   41 lsblk
+   42  sudo fdisk /dev/xvdbf
+   43  history
+   44  lsblk
+   45  sudo mkfs.ext4 /dev/xvdbf
+   46  lsblk
+   47  mkdir /mnt/data
+   48  mount /dev/xvdbf /mnt/data
+   49  lsblk
+   50  df -h
+   51  blkid /dev/xvdbf1
+   52  sudo blkid /dev/xvdbf1
+   53  lsblk
+   54  sudo blkid /dev/xvdbf
+   55  sudo nano /etc/fstab
+   56  umount /mnt/data
+   57  df -h
+   58  mount -a
+   59  systemctl daemon-reload
+   60  mount -a
+   61  df -h
+   62  sudo nano /etc/fstab
+   63  df -h
+   64  mount -a
+   65  systemctl daemon-reload
+   66  mount -a
+   67  sudo blkid
+   68  clear
+   69  lsblk
+   70  fdisk /dev/xvdbf
+   71  lsblk
+   72  mkfs.ext4 /dev/xvdbf1
+   73  lsblk
+   74  ls /mnt/
+   75  ls /mnt/data/
+   76  mount /dev/xvdbf1 /mnt/data
+   77  ls /mnt/data/
+   78  blkid /dev/xvdbf1
+   79  nano /etc/fstab
+   80  umount /mnt/data
+   81  mount -a
+   82  systemctl daemon-reload
+   83  mount -a
+   84  df -h
+   85  blkid /dev/xvdbf1
+   86  mount -a
+   87  lsblk
+   88  file -s /dev/xvdbf1
+   89  nano /etc/fstab
+   90  df -h
+   91  mount | grep /mnt/data
+   92  sudo mount /dev/xvdbf1 /mnt/data
+   93  systemctl daemon-reload
+   94  sudo mount /dev/xvdbf1 /mnt/data
+   95  mount | grep /mnt/data
+   96  systemctl daemon-reload
+   97  df -h | grep /mnt/data
+   98  touch /mnt/data/testfile
+   99  ls -l /mnt/data/testfile
+  100  rm /mnt/data/testfile
+  101  ls -l /mnt/data/
+  102  umont /mnt/data
+  103  umount /mnt/data
+  104  systemctl daemon-reload
+  105  df -h
+  106  mount -a
+  107  df -h

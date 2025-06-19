@@ -1,0 +1,35 @@
+#Network
+#for netstat install net-tools#
+netstat -at
+netstat -tulnp | grep 80 | grep nginx
+ss -tulnp | grep 80 | grep nginx  // Проверит, что Nginx слушает порт 80 на VIP:10.100.93.2
+ip a | grep 10.100.93.2
+telnet 10.100.93.4 22 // узнать если по порту 22 есть обращение
+sudo ss -tuln // узнать какие порты прослушываются 
+
+#Permissions
+cat /etc/shadow 
+cat /etc/passwd
+cat /etc/group
+
+#Process
+ps l
+ps aux (process_ID dispalay all_more details_list)
+ps aux | grep named
+kill 9 1304(processid)
+ls /proc
+cat /proc/12345/status
+
+#Disks, fylesystem
+tar 
+gzip
+df -T #Show information about filesystem
+apt install sysstat
+iostat
+vmstat
+
+
+READ MORE ABOUT niceness (for what is changing the nice)
+
+$TASK
+1. ps l, ps aux, top = разобрать

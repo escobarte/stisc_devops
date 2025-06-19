@@ -1,0 +1,100 @@
+yaml
+1. key-value
+name: Serge / name: key - serge: value
+age: 30 / age: number
+city: Chisinau / city: line
+2. lists
+names:
+	- serge
+	- andrei
+	- igor
+3. Nested structures (objects inside objects)
+person: / main key
+ name: Alice / simple value
+ age: 22 / simple value
+ address: / nested object under
+  street: Main St 12
+  city: chisinau
+  country: Moldova
+4. Combining lists and nested objects
+servers: / is a list
+servers:
+ - (is an object)
+   name: web01
+   ip: 192
+ - 
+   name: db01
+   ip: 193
+   role: database
+ -
+   name: backend
+   role: good
+ 
+5. Simple GitLab CI Pipeline
+In GitLab, the CI/CD pipeline is defined using a .gitlab-ci.yml
+stages: Defines the order of pipeline steps (test in this case).
+test-job: The name of the job.
+script: The list of shell commands to run in that job.
+'''
+stages:
+ -
+  test
+test-job:
+ stage: test
+ script:
+ - echo "Running tests..."
+ - echo "CI is workgin, grea job [Serge]"
+ 
+6.  Multi-stage GitLab CI Pipeline (real-world example)
+'''
+stages:
+ - build
+ - test
+ 
+build-job:
+ stage: build
+ script:
+  - echo "building the app.."
+  - mkdir dist
+  - touch dist/app.bin
+
+test-job:
+ stage: test
+ script: 
+ - echo "running test ..."
+ - if [ -f dist/app.bin]; then echo "file exist. test passed"; else echo "test fialed"; fi
+ 
+ ============================ Working in GitLab ==========================
+###############################################################################
+ stages:
+  - build
+
+build-and-test:
+  stage: build
+  script:
+    - echo "🔨 Building..."
+    - mkdir -p my_app
+    - echo "compiled" > my_app/app.txt
+    - echo "✅ Testing..."
+    - test -f my_app/app.txt && echo "File found!" || echo "Missing!"
+###############################################################################
+ stages:
+  - prepare
+  - build
+  - test
+
+prepare-job:
+  stage: prepare
+  script:
+    - echo "settingup env .."
+    - echo "using node.js 20"
+build-job:
+  stage: build
+  script:
+    - echo "building the app"
+    - echo "main app completed"
+test-job:
+  stage: test
+  script:
+    - echo "running test"
+    - echo "test passed"

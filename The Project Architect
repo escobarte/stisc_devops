@@ -1,0 +1,31 @@
+Архитекту проекта.
+Public IP 		/ 185.108.183.205 <-	/VIP 10.100.93.2
+Prx01 / Nginx		/ 10.100.93.3	  ->	/VIP 10.100.93.2
+Prx02 / Nginx		/ 10.100.93.4	  ->	/VIP 10.100.93.2
+App01 / Laravel 	/ 10.100.93.5
+App02 / Laravel 	/ 10.100.93.6
+App03 / Laravel 	/ 10.100.93.7
+DB01  / MySQL / DNS     / 10.100.93.8		/DNS -> app.lab.local
+
+LVM
+
+PHP and modules
+Laravel
+Composer
+Artisan
+Apache2
+a2dissite ?
+
+MySql
+
+NGINX
+Upstream = Loadbalancer
+
+Keepalived=Unicast
+
+Bind9/named 
+Apparmour
+
+HTTPS (Slef-Signed SSL)
+
+IPTABLES Rules
