@@ -12,6 +12,9 @@ cat /etc/shadow
 cat /etc/passwd
 cat /etc/group
 
+Copy _ Backups
+mkdir -p /home/youruser/backups/var_www_backup_$(date +%Y%m%d_%H%M)
+
 #Process
 ps l
 ps aux (process_ID dispalay all_more details_list)
@@ -28,6 +31,8 @@ apt install sysstat
 iostat
 vmstat
 
+#Filtering
+history | awk '{$1=$2=$3=""; print $0}' | sed 's/^ *//'
 
 READ MORE ABOUT niceness (for what is changing the nice)
 

@@ -1,3 +1,16 @@
+1. cd /mnt/d/mcruzen
+
+Tips and tricks:
+	git log --oneline --graph --decorate
+	ls -a
+	cat .git/config
+	git branch -M main
+	
+
+
+
+
+
 Краткое руководство: Загрузка проекта на GitHub (WSL & PAT)
 На GitHub: Создать новый, пустой репозиторий (без README). Скопировать его HTTPS URL.
 В Ubuntu WSL:

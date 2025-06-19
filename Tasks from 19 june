@@ -1,0 +1,3 @@
+### Уменьшение /dev/sda5 для того чтобы расширить /root
+1. Snapshot для App03 [Done]
+2. sudo e2fsck -f /dev/vg_app03/www
