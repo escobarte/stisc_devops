@@ -20,6 +20,9 @@ eu fac:
 Изначально:
 Zabbix выбираешь через Apache
 1.1 Resize /root +20GB и после Deploy
++1.1.1 Освободить место которое было занято
++1.1.2 Resize /root +20GB
+1.1.1 Deploy Zabbix
 
 2.DB01 
 2.1 Создать 1 партицию LVM "DATA-mysql"

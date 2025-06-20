@@ -1,0 +1,73 @@
+Alexandr Dagutan
+Задача: замена ssl сертификата на сервере
+
+
+Code from WSL
+:code
+8140  Jun 20 2025 08:55:43 ssh 10.100.45.7
+ 8141  Jun 20 2025 08:56:37 scp ssl/gov.md-2025/wild.gov.md.* 10.100.45.7:~/
+ 8142  Jun 20 2025 09:14:54 cat > list.txt
+ 8143  Jun 20 2025 09:14:59 vim list.txt
+ 8144  Jun 20 2025 09:15:28 cat list.txt
+ 8145  Jun 20 2025 09:16:10 for DOMAIN in $(cat list.txt); do host $DOMAIN; done
+ 8146  Jun 20 2025 09:17:27 vim list.txt
+ 8147  Jun 20 2025 09:17:34 for DOMAIN in $(cat list.txt); do host $DOMAIN; done| grep 188
+ 8148  Jun 20 2025 09:20:56 openssl s_client -connect gestionare-sanctiuni.gov.md
+ 8149  Jun 20 2025 09:21:00 openssl s_client -connect gestionare-sanctiuni.gov.md:443
+ 8150  Jun 20 2025 09:21:09 openssl s_client -connect gestionare-sanctiuni.gov.md:443 -dates -noout
+ 8151  Jun 20 2025 09:21:24 openssl s_client -dates -connect gestionare-sanctiuni.gov.md:443
+ 8152  Jun 20 2025 09:21:27 openssl s_client --dates -connect gestionare-sanctiuni.gov.md:443
+ 8153  Jun 20 2025 09:21:31 openssl s_client -connect gestionare-sanctiuni.gov.md:443
+ 8154  Jun 20 2025 09:21:56 openssl s_client -connect gestionare-sanctiuni.gov.md:443| grep NotBefore
+ 8155  Jun 20 2025 09:22:51 openssl s_client -connect gestionare-sanctiuni.gov.md:443| openssl x509 -text -noout
+ 8156  Jun 20 2025 09:23:03 openssl s_client -connect gestionare-sanctiuni.gov.md:443| openssl x509 -text -noout| grep NotBefore
+ 8157  Jun 20 2025 09:23:42 curl https://gestionare-sanctiuni.gov.md -vI --stderr - | grep "expire date"
+ 8158  Jun 20 2025 09:24:14 for DOMAIN in $(cat list.txt); do curl https://$DOMAIN -vI --stderr - | grep "expire date"; done
+ 8159  Jun 20 2025 09:26:11 history
+
+
+ Code from Server
+ :code
+ 1999  Jun 20 2025 08:57:01 grep ssl_cert /etc/nginx/conf.d/*conf
+ 2000  Jun 20 2025 08:57:55 cp wild.gov.md.* /etc/nginx/ssl/
+ 2001  Jun 20 2025 08:58:00 cd /etc/nginx/conf.d/
+ 2002  Jun 20 2025 08:58:03 ls
+ 2003  Jun 20 2025 08:58:19 vim eapl.gov.md.conf
+ 2004  Jun 20 2025 09:00:47 nginx -t && systemctl reload nginx
+ 2005  Jun 20 2025 09:02:42 sed 's/wgov.pem/wild.gov.md.pem/g' *conf
+ 2006  Jun 20 2025 09:02:49 sed 's/wgov.pem/wild.gov.md.pem/g' *conf| grep ssl_cer
+ 2007  Jun 20 2025 09:03:21 sed 's/wgov.pem/wild.gov.md.pem/g' -i *conf
+ 2008  Jun 20 2025 09:03:38 sed 's/wgov.key/wild.gov.md.key/g' -i *conf
+ 2009  Jun 20 2025 09:03:44 vim mpass.gov.md.conf
+ 2010  Jun 20 2025 09:04:01 ls
+ 2011  Jun 20 2025 09:04:14 grep -l wild.gov.md.pem *conf
+ 2012  Jun 20 2025 09:04:42 tail -f /var/log/nginx/mcabinet.gov.md-api-access.log
+ 2013  Jun 20 2025 09:05:28 grep /var/log/nginx/msign.gov.md-access.log
+ 2014  Jun 20 2025 09:05:32 tail -f /var/log/nginx/msign.gov.md-access.log
+ 2015  Jun 20 2025 09:06:18 grep ssl_cert *conf
+ 2016  Jun 20 2025 09:06:22 grep ssl_cert *conf| grep -v wild.gov.md
+ 2017  Jun 20 2025 09:07:14 sed 's/private24.key/wild.gov.md.key/g' -i *conf
+ 2018  Jun 20 2025 09:07:16 grep ssl_cert *conf| grep -v wild.gov.md
+ 2019  Jun 20 2025 09:07:26 nginx -t
+ 2020  Jun 20 2025 09:08:02 vim mpass.gov.md.conf
+ 2021  Jun 20 2025 09:08:30 nginx -t
+ 2022  Jun 20 2025 09:08:46 nginx -T
+ 2023  Jun 20 2025 09:09:31 ls -alht /etc/nginx/ssl/
+ 2024  Jun 20 2025 09:10:11 grep ssl_cert ../nginx.conf
+ 2025  Jun 20 2025 09:10:14 grep ssl_cert ../conf.d/
+ 2026  Jun 20 2025 09:10:16 grep ssl_cert ../conf.d/*conf
+ 2027  Jun 20 2025 09:10:51 sed 's/wild.gov.md24.pem/wild.gov.md.pem/g' -i *conf
+ 2028  Jun 20 2025 09:10:55 nginx -t
+ 2029  Jun 20 2025 09:10:59 nginx -t && systemctl reload nginx
+ 2030  Jun 20 2025 09:11:18 tail -f /var/log/nginx/verifica.gov.md-access.log
+ 2031  Jun 20 2025 09:12:05 grep server_name *conf
+ 2032  Jun 20 2025 09:12:51 grep server_name *conf| cut -f1 -d':'
+ 2033* Jun 20 2025 09:13:12 grep server_name *conf| cut -f1 -d':'| grep gov.md|
+ 2034  Jun 20 2025 09:14:05 grep server_name *conf
+ 2035  Jun 20 2025 09:14:16 grep server_name *conf| awk '{print $3}'
+ 2036  Jun 20 2025 09:14:22 grep server_name *conf| awk '{print $3}'| grep gov.md
+ 2037  Jun 20 2025 09:14:35 grep server_name *conf| awk '{print $3}'| grep gov.md| uniq
+ 2038  Jun 20 2025 09:15:43 curl ifconfig.co
+ 2039  Jun 20 2025 09:16:48 ls /etc/keepalived/keepalived.conf
+ 2040  Jun 20 2025 09:16:50 cat /etc/keepalived/keepalived.conf
+ 2041  Jun 20 2025 09:17:11 curl ifconfig.co
