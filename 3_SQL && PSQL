@@ -1,0 +1,10 @@
+DROP DATABASE database_name; # remove a data 
+DROP USER 'username'@'host'; # remove a user
+SHOW DATABASES; #show all databases on server
+
+/psql
+SELECT datname FROM pg_database WHERE datistemplate = false;
+SELECT usename FROM pg_user;
+
+
+ALTER SCHEMA public OWNER TO postgres;

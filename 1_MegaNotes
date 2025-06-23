@@ -4,3 +4,6 @@ parted /dev/sda print free
 sudo ss -tuln | grep 5432
 sudo lsof +f -- /mnt/dns
 sudo fuser -vm /mnt/dns
+tail -n 50 /var/log/zabbix/zabbix_server.log
+sudo ss -tuln | grep 5432
+systemctl list-units --type=service --state=running

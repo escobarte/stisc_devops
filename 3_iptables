@@ -1,14 +1,7 @@
 /etc/iptables/rules.v4
 /usr/lib/systemd/system/iptables.service. # сервис iptables находится тут 
 iptables -L -n -v
-iptalbles -S #выводит список правил
-		# Chain Input, Forward, Output
-		Your iptables configuration is currently in its default state with highly permissive policies. This means:
-		No specific firewall rules are set up to block or allow traffic based on source IP, destination port, protocol, or any other criteria.
-		All incoming, outgoing, and forwarded traffic is allowed by default.
-		While this configuration provides maximum connectivity, it also means your system is not protected by a firewall. If this is a production server or one exposed to the internet, it's generally recommended to implement more restrictive iptables rules to enhance security
-		
-
+iptalbles -S
 ..Как искать файл в убунту
 	which iptables-save
 	whereis iptables-save
