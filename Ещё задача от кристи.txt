@@ -6,7 +6,7 @@ Management of usage and permissions
 +Управление процессами и сервисами (ps, top, systemctl, etc..)
 +Настройки сети (ip, netplan, nmcli, ss, iptables, etc..)
 +Настройка DNS, NTP, SSH
-+Мониторинг ресурсов (CPU, RAM, disk I/O, load average, etc..)
+Мониторинг ресурсов (CPU, RAM, disk I/O, load average, etc..)
 +Управление логами (journalctl, rsyslog, logrotate)
 +Apt, yum, dnf, snap
 Компилирование и установка из ресурсов

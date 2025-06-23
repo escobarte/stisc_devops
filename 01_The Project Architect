@@ -1,12 +1,35 @@
-Архитекту проекта.
-Public IP 		/ 185.108.183.205 <-	/VIP 10.100.93.2
-Prx01 / Nginx		/ 10.100.93.3	  ->	/VIP 10.100.93.2
-Prx02 / Nginx		/ 10.100.93.4	  ->	/VIP 10.100.93.2
-App01 / Laravel 	/ 10.100.93.5
-App02 / Laravel 	/ 10.100.93.6
-App03 / Laravel 	/ 10.100.93.7
-DB01  / MySQL / DNS     / 10.100.93.8		/DNS -> app.lab.local
+              🌍 Public IP: 185.108.183.205
+                         │
+                         ▼
+                  VIP: 10.100.93.2 (Keepalived)
+                   │               │
+        ┌──────────┘               └──────────┐
+        ▼                                     ▼
+    Prx01 (93.3)   <--unicast-->          Prx02 (93.4)
+        │                                     │
+        └──────→ балансировка на Laravel ↓────┘
+                   ┌─────┬─────┬─────┐
+                   ▼     ▼     ▼
+                App01  App02  App03 (Zabbix)
+                            │
+                            ▼
+                         DB01 (93.8)
+                 → MySQL (Laravel) + PostgreSQL (Zabbix) + DNS
 
+
+
+
+Архитекту проекта.
+Public IP 									/ 185.108.183.205 <-	/VIP 10.100.93.2
+Prx01 / Nginx								/ 10.100.93.3	  ->	/VIP 10.100.93.2
+Prx02 / Nginx								/ 10.100.93.4	  ->	/VIP 10.100.93.2
+App01 / Laravel 							/ 10.100.93.5
+App02 / Laravel 							/ 10.100.93.6
+App03 / Laravel / Psql-Zabbix				/ 10.100.93.7
+DB01  / MySQL-Larave / Psql-Zabbix / DNS     / 10.100.93.8		/DNS -> app.lab.local
+
+
+------------------------------
 LVM
 
 PHP and modules
@@ -29,3 +52,37 @@ Apparmour
 HTTPS (Slef-Signed SSL)
 
 IPTABLES Rules
+
+Zabbix
+Psql
+---------------------------------
+✅ Возможна ли кластеризация? — Да, частично.
+Что	Можно ли кластеризовать?	Комментарий
+MySQL (Laravel)	✅ Да	MySQL Replication / Galera Cluster
+PostgreSQL (Zabbix)	✅ Да	Streaming Replication + Patroni
+Zabbix	⚠ Частично	Сам Zabbix может читать с кластера PostgreSQL
+DNS (BIND)	⚠ Ручной failover	Можно сделать Master/Slave, но редко нужно
+Laravel backend	✅ Уже кластер (App01–03 + LB)	Отлично сделано
+---------------------------------
+🧱 Пример гибридной архитектуры (реалистичный):
+╔══════════════════╗
+║     KUBERNETES   ║
+║ - Laravel Apps   ║
+║ - Zabbix Server  ║
+║ - Prometheus     ║
+║ - Grafana        ║
+╚══════════════════╝
+        │
+        ▼
+╔════════════════════╗
+║     Прокси (VIP)   ║
+║  Prx01/Prx02 NGINX ║
+╚════════════════════╝
+        │
+        ▼
+╔════════════════════╗
+║     DB01 (bare OS) ║
+║ - MySQL            ║
+║ - PostgreSQL       ║
+║ - DNS              ║
+╚════════════════════╝

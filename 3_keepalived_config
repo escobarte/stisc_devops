@@ -1,4 +1,4 @@
- sudo nano /bin/check_nginx.sh
+cat sudo nano /bin/check_nginx.sh
 #!/bin/sh
 if [ -z "`pidof nginx`" ]; then
   exit 1

@@ -1,3 +1,8 @@
+#Искать слово в указанной папке и её под папок
+grep -r "unicast" /etc/
+
+
+
 tail -f /var/log/nginx
 grep ssl_cert *conf
 parted /dev/sda print free
