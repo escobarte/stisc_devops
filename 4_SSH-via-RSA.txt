@@ -1,0 +1,10 @@
+SSH via rsa
+1. Creating ssh
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa_scusnir -C "scusnir"
+#created in dirrectory ~/.ssh/
+2. Adding public key to server ipa
+visit: https://dc1.gov.ipa/ipa/ui/#
+find: scusnir
+add pub key: **** / save
+3. #from WSL
+ssh -i ~/.ssh/id_rsa_scusnir scusnir@server_IP
