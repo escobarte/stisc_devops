@@ -15,6 +15,7 @@ systemctl stop apache2
 umount /var/www
 mkdir /mnt/temp_www_source
 mount /dev/mapper/vg_app03-www /mnt/temp_www_source/
+mkdir /tmp/backups
 rsync -aAXv --delete --info=progress2 /mnt/temp_www_source/ /tmp/backups/var_www_backup_$(date +%Y%m%d_%H%M)
 ls /tmp/backups/
 ls -lR /mnt/temp_www_source/ | wc -l
@@ -32,6 +33,7 @@ fdisk /dev/sda (n, p, 5, Enter_iportnat_to_first_sector, +10G, t, 8e, p, w)
 partprobe /dev/sda
 pvcreate /dev/sda5
 vgcreate vg_app03 /dev/sda5
+vgdisplay vg_app03
 lvcrete -n www -L 5G vg_app03
 mkfs.ext4 /dev/mapper/vg_app03-www
 mkdir -p /var/www/

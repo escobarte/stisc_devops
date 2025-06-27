@@ -1,0 +1,71 @@
+1. Узнаю на каких серверах какие диски и сколько места
+	lsblk
+	lsblk -f /dev/sdb
+	fdisk -l /dev/sdb
+	parted /dev/sdb/ unit GB print free
+	-- du -sh /srv/nfs # Сколько весит директория
+
+2. Так как я изначально не правильно настроил LVM - пришлось перенастроить партиции и диски, это в отдельном блокноте
+	После настроил LVM для NFS. И смонтировал /srv/nfs/
+
+3.Настройка NFS-server на 93.5
+	#Установка сервера
+		apt updated
+		apt install nfs-kernel-server -y
+		systemctl status nfs-server
+
+		mkdir -p /srv/nfs/zabbix_backup #создал отдельную директорию для zabbix на NFS
+		chown root:root /srv/nfs/zabbix_backup #установил владельца
+		chmod 777 /srv/nfs/zabbix_backup !!! заменить на юзра для заббикс только !!!
+		#/etc/exports = обязательно
+		echo '/srv/nfs/zabbix_backup 10.100.93.7(rw,sync,no_subtree_check,fsid=0,root_squash)' | tee -a /etc/exports 
+		exportfs -ra
+		exportfs -v
+
+	3.1 Настройика IPTABLES {TCP/UDP 2049 — nfsd, TCP 111 — rpcbind (портмаппер), TCP 32765–32769 — mountd, statd, lockd}
+		nano  /etc/nfs.conf
+		[nfsd] 	port=2049 / [mountd] port=32767 / [statd] port=32765 / [lockd] port=32766
+		systemctl restart nfs-server
+
+		# Разрешить с клиента
+		sudo iptables -L INPUT --line-numbers
+		sudo iptables -A INPUT -s 10.100.93.7 -p tcp -m multiport --dports 111,2049,32765:32769 -j ACCEPT
+		sudo iptables -A INPUT -s 10.100.93.7 -p udp -m multiport --dports 111,2049,32765:32769 -j ACCEPT
+
+		# Запретить всем остальным
+		sudo iptables -A INPUT -p tcp -m multiport --dports 111,2049,32765:32769 -j DROP
+		sudo iptables -A INPUT -p udp -m multiport --dports 111,2049,32765:32769 -j DROP
+		#Сохраняем правила для убунту
+		apt install iptables-persistent -y
+		netfilter-persistent save
+
+4.Установка Клиента 93.8 ^^ 93.7
+	apt update && apt install nfs-common -y
+	mkdir -p /mnt/nfs/zabbix_client
+	mount 10.100.93.5:/srv/nfs/zabbix_backup /mnt/nfs/zabbix_client
+	df -h | grep nfs
+	touch /mnt/nfs/zabbix_client/file_to_test
+
+5. Создаю zabbixsrv && zabbixcli. Для настройки доступов
+	#На сервере
+		getent passwd | cut -d: -f3 | sort -n | tail #Проверям чтобы 1050 был свободен
+		useradd -u 1050 -m -s /bin/bash zabbixusr
+		#так как я сделал ошибку пришлось найит юзера и сделать переименнование
+			cut -d: -f1 /etc/passwd | grep zabb
+			usermod -l error_name new_name
+			#Нужно удалить и создать занного, так как неправильное имя создало непарвильную группу, и тд.
+				userdel zabbixsrv
+				grep "zabb" /etc/group
+		chown zabbixsrv:zabbixsrv /srv/nfs/zabbix_backup
+		chmod 750 /srv/nfs/zabbix_backup/
+		ls -ld /srv/nfs/zabbix_backup/ 
+		id zabbixsrv
+	#На клиенте
+		useradd -u 1050 -m -s /bin/bash zabbixcli (zabbixclidb)
+		id zabbixcli
+		mount 10.100.93.5:/srv/nfs/zabbix_backup /mnt/nfs/zabbix_client/
+	#Тестирую отправку от имени юзера
+		sudo -u zabbix touch /mnt/nfs/zabbix_client/test.file #It Works!
+		sudo -u zabbixcli bash -c 'echo "backup" > /mnt/nfs/zabbix_client/test.log' #updating file.
+
+6. Бэкап + дава + автоудаление старых (pg_dump)

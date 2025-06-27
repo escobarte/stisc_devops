@@ -1,0 +1,31 @@
+#!/bin/bash
+
+#Variables & Config
+USERNFS="zabbixclidb"
+DATE=$(date +%F_%H-%M)
+LOGFILE="/var/log/zabbix_db_backup.log"
+FILENAME="zabbix_db_${DATE}.sql.gz"
+BACKUP_DIR="/mnt/nfs/zabbix_client_db"
+
+#Logging
+echo "[$(date)] Starting Backup Database Zabbix ...." | tee -a "$LOGFILE"
+
+#Dump
+sudo -u zabbix pg_dump zabbix | gzip | sudo -u $USERNFS tee /mnt/nfs/zabbix_client_db/$FILENAME > /dev/null
+
+#Echo Result
+if [[ $? -eq 0 ]]; then
+        echo "[$(date)] Dump, GZIP and MV on 93.5 successful: ${FILENAME}" | tee -a "$LOGFILE"
+else
+        echo "[$(date)] FAILED ...." | tee -a "$LOGFILE"
+fi
+
+#Clean 1h max
+echo "[$(date)] Verifying and Delete files 1H older ...." | tee -a "$LOGFILE"
+sudo -u $USERNFS find "$BACKUP_DIR" -maxdepth 1 -type f -name "zabbix_db_*.sql.gz" -mmin +40 -delete
+echo "Checking Deletig" | tee -a "$LOGFILE"
+if [[ $? -eq 0 ]]; then
+        echo "[$(date)] Cleanup successful: old files removed (or none found)." | tee -a "$LOGFILE"
+else
+            echo "[$(date)] Cleanup FAILED (check find command output for errors)." | tee -a "$LOGFILE"
+fi
