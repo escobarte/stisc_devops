@@ -1,14 +1,60 @@
-#Искать слово в указанной папке и её под папок
-grep -r "unicast" /etc/
+-r = Recursive(no only in indicated dirrectory, also in subdirectories and files)
+-f=  will immediately print new lines writen in file
+
+--------????
+#Filtering
+history | awk '{$1=$2=$3=""; print $0}' | sed 's/^ *//'
+find /path/to/source/folder/ -maxdepth 1 -type f -name "*Gemeni*" -exec mv {} /path/to/destination/folder/ \; #search by name contains this word and move it to other folder
+--------????
+grep -r "unicast" /etc/ #Looking(Print) word "unicast" in "/etc/" directory.
+grep -r ssl_cert *conf #Looking(Print) "ssl_cert* in all files with "*conf" extension.
+tail -f /var/log/nginx #Display last 10 lines in Ngixn, (-f) will immediately print new lines writen in file.
+tail -n 50 /var/log/zabbix/zabbix_server.log #Print last 50 lines.
+
+ss -tuln | grep 5432 #SS (what network services are listening), -tuln(tcp, udp, listening sockets,numeric) | print only port 5342
+netstat #apt insatll net-tools - display network connections, routing, statisc etc/
+netstat -tulnp | grep nginx # display netwokr statisc for Ngixn
+ss -tulnp | grep 80 | grep nginx 
+ip a # ip address show
+ip a | grep 93.2
+telnet 10.100.93.4 22 # find if on this ip is listening port 22
+tcpdump -ni ens192 #display and capture packages on interface 192 and don't resolve IP and Ports
+
+parted /dev/sda print free #Partition Manager
+parted /dev/sdb1 unit GB print free #Print free space in GB for /sdb1
+df -T #Disk free
+apt install sysstat
+iostat #input/output statistics
+vmstat #virtual memmory statiscs
 
 
 
-tail -f /var/log/nginx
-grep ssl_cert *conf
-parted /dev/sda print free
-sudo ss -tuln | grep 5432
-sudo lsof +f -- /mnt/dns
-sudo fuser -vm /mnt/dns
-tail -n 50 /var/log/zabbix/zabbix_server.log
-sudo ss -tuln | grep 5432
-systemctl list-units --type=service --state=running
+
+
+lsof +f -- /mnt/dns # LiSt Open fiels
+or
+fuser -vm /mnt/dns #Which processes are preventing me from unmounting /mnt/dns
+ps l #display in long format processes on the current terminal
+ps aux #display all running processess on the systemctl
+ps aux | grep nginx
+kill -9 <PID> #Forceful way to stop processes
+
+
+systemctl --type=service --state=running #Services that are running on server
+journalctl                  # Показать все логи
+journalctl -u nginx         # Логи конкретного сервиса
+journalctl --since today    # Логи за сегодня
+journalctl -b               # Логи текущей загрузки
+
+User and Groups Administration
+/etc/shadow #stores hashed user passwords
+/etc/passwd #show user name, with password stores in "shadow", uid .. etc/
+/etc/group #show groups
+id zabbix #show ID for user zabbix
+
+
+
+
+
+
+

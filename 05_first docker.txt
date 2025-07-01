@@ -1,0 +1,31 @@
+
+sudo iptables -A INPUT -p tcp -m multiport --dports 7080 -j ACCEPT && 8080
+1. docker pull nginx (like download)
+2. dokcer run --name D_Pr01 -p 7090:80 -d nginx
+!!! Remark, on the same server I have another nginx, that listening on port 80, but mine from docker is working because, i did 7090:80 wich means he exit only when asking form port 7090 in browser. 
+2. docker stop <container_id>
+3. 10.100.93.4:7090 -> Welcome to Nginx )
+4. docker ps -a : to see all containers
+5. docker rm <container_id>
+
+6. docker exec test4 ls / 
+7. docker exec -it test4 /bin/bash ( enter to your container )
+	apt update && apt upgrade -y
+	apt install procps
+	exit (for exit)
+7.1 
+docker inspect mysql (you will see config of the container)
+
+8. docker logs test4
+TO set a Variable into containre (-e Variable)
+
+docker run --name test5 -d -e MYSQL_ROOT_PASSWORD=1323 -p 8080:3306 -v /tmp/dockerst:/var/lib/mysql mysql
+docker run --name test5[containerName] -d -e MYSQL_ROOT_PASSWORD=1323 [setPassworfroRoot] -v /tmp/dockerst:/var/lib/mysql[install mysql lib to /tmp/dockerst dirrectory] mysql [image:mysql]
+
+docker inspect <idcontainter> you can find internal IP of container and connect to your DB
+mysql -h 172.17.0.3 -u root -p1323
+				
+Volumes:
+9. is good if you delete container, data is remaining
+docker volume create fortest
+docker volume ls (/var/lib/docker/volumes) 

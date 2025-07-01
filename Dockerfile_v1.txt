@@ -1,0 +1,44 @@
+# Используем Ubuntu как базу
+FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
+# Устанавливаем зависимости
+RUN apt update && apt install -y \
+    apache2 \
+    php \
+    php-cli \
+    php-mbstring \
+    php-xml \
+    php-bcmath \
+    php-curl \
+    php-zip \
+    php-mysql \
+    unzip \
+    curl \
+    git
+
+# Устанавливаем Composer
+RUN curl -sS https://getcomposer.org/installer | php && \
+    mv composer.phar /usr/local/bin/composer
+
+# Создаем директорию для Laravel
+WORKDIR /var/www
+
+# Устанавливаем Laravel (можно заменить на COPY существующего проекта)
+RUN composer create-project laravel/laravel app02
+
+# Настраиваем владельца файлов
+RUN chown -R www-data:www-data /var/www/app02
+
+# Копируем конфиг сайта
+COPY app02.conf /etc/apache2/sites-available/app02.conf
+
+# Активируем сайт и модуль rewrite
+RUN a2dissite 000-default.conf && \
+    a2ensite app02.conf && \
+    a2enmod rewrite
+
+# Открываем порт 80
+EXPOSE 80
+
+# Запускаем Apache в foreground
+CMD ["apachectl", "-D", "FOREGROUND"]

@@ -1,10 +1,37 @@
+MySql:
+CREATE DATABASE laravel CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 DROP DATABASE database_name; # remove a data 
 DROP USER 'username'@'host'; # remove a user
 SHOW DATABASES; #show all databases on server
+USE laravel; #После Show Databases, в списке была таблица laravel, 'USE' использует это таблицу чтобы увидить внутренности.
+SELECT User, Host FROM mysql.user; #Показывает список пользователей и хосты
+CREATE USER 'laravel_user_app04'@'10.100.93.4' IDENTIFIED BY '1323';
+GRANT ALL PRIVILEGES ON laravel.* TO 'laravel_user_app04'@'10.100.93.4';
+FULSH PRIVILEGES;
+EXIT;
 
-/psql
+
+
+##### Создал пользовотеля для доступа с сервера 93.4 #### 
+SELECT User, Host FROM mysql.user;
+CREATE USER 'laravel_user_app04'@'10.100.93.4' IDENTIFIED BY '1323';
+GRANT ALL PRIVILEGES ON laravel.* TO 'laravel_user_app04'@'10.100.93.4';
+FULSH PRIVILEGES;
+EXIT;
+##### Тест подключения к базе 'С' сервер 93.4 #####
+apt install mysql-client -y
+mysql -h 10.100.93.8 -u laravel_user_app04 -p
+##### Подключение успешно прошло ##### 
+
+
+
+PosgrreSql:
 SELECT datname FROM pg_database WHERE datistemplate = false;
 SELECT usename FROM pg_user;
 
 
 ALTER SCHEMA public OWNER TO postgres;
+
+
+
+

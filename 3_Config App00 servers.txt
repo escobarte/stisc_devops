@@ -55,13 +55,12 @@ a2ensite app02.conf					//Site app02 already enabled
 systemctl reload apache2
 		//Connecting Laravel to DB 10.100.93.8
 nano /var/www/app02/.env
-				DB_CONNECTION=mysql
-				DB_HOST=10.100.93.8
-				DB_PORT=3306
-				DB_DATABASE=laravel
-				DB_USERNAME=laravel_user
-				DB_PASSWORD=1323
-
+DB_CONNECTION=mysql
+		DB_HOST=10.100.93.8
+		DB_PORT=3306
+		DB_DATABASE=laravel
+		DB_USERNAME=laravel_user_app01
+		DB_PASSWORD=1323
 	####// Adding user from app02 in DB with host on DB01 Server
 mysql
 	CREATE USER 'laravel_user'@'10.100.93.6' IDENTIFIED BY '1323';

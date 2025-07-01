@@ -25,7 +25,7 @@ docker inspect - details of container & image
 As example i will run nginx container
 docker pull nginx
 docker images
-docker run --name Prx01 nginx -d(ditach) -p(port mapping) 8080:80
+docker run --name D_Prx01 -p 7090:80 -d nginx
 docker ps
 #now you can access your ip addr with port 8080 and will see welcome for nginx
 ps -ef | grep nginx (container is a process running from a directory)
