@@ -24,9 +24,10 @@ mv composer.phar /usr/local/bin/composer
 composer --version
 	// Laravel
 cd /var/www
+
 sudo composer create-project laravel/laravel app02
 sudo chown -R www-data:www-data /var/www/app02
-	// VirtualHost conf
+Create file	// VirtualHost .conf
 sudo nano /etc/apache2/sites-available/app02.conf
 !!!!!!!		///add this!!!!!!!!!
 <VirtualHost *:80>

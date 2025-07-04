@@ -41,6 +41,7 @@ kill -9 <PID> #Forceful way to stop processes
 
 
 systemctl --type=service --state=running #Services that are running on server
+
 journalctl                  # Показать все логи
 journalctl -u nginx         # Логи конкретного сервиса
 journalctl --since today    # Логи за сегодня

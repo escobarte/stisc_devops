@@ -1,4 +1,4 @@
-  GNU nano 7.2                                                                                                                                          /opt/3script.sh                                                                                                                                                   !/bin/bash
+                                                                                                                                 !/bin/bash
 #Decalaring
 DIR_ETC="/etc/zabbix"
 DIR_SHARE="/usr/share/zabbix"

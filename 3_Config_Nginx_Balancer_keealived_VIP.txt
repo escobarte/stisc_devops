@@ -1,4 +1,4 @@
-Nginx + Loadbalancer
+Nginx + Loadbalancer + Keepalive + VIP
 
 sudo apt install nginx -y
 sudo systemctl enable nginx
@@ -7,34 +7,34 @@ sudo systemctl status nginx
 
 //config file, create it
 sudo nano /etc/nginx/sites-available/app-lb2.conf 
-#######################################################
-upstream backend {
-        server 10.100.93.5 max_fails=1 fail_timeout=1s;
-        server 10.100.93.6 max_fails=1 fail_timeout=1s;
-        server 10.100.93.7 max_fails=1 fail_timeout=1s;
-}
 
-server {
-    listen 80 default_server;
+    upstream backend {
+            server 10.100.93.5 max_fails=1 fail_timeout=1s;
+            server 10.100.93.6 max_fails=1 fail_timeout=1s;
+            server 10.100.93.7 max_fails=1 fail_timeout=1s;
+    }
 
-    location / {
-        proxy_pass http://backend;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+    server {
+        listen 80 default_server;
 
-        proxy_connect_timeout 1s;
-        proxy_read_timeout 5s;
-        proxy_next_upstream error timeout http_502 http_503 http_504;
- }
-}
-#######################################################
+        location / {
+            proxy_pass http://backend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+
+            proxy_connect_timeout 1s;
+            proxy_read_timeout 5s;
+            proxy_next_upstream error timeout http_502 http_503 http_504;
+     }
+    }
+
 //activate conf file
 sudo ln -s /etc/nginx/sites-available/app-lb2.conf /etc/nginx/sites-enabled/
 sudo rm /etc/nginx/sites-enabled/default
 sudo nginx -t
-
+----------------------------------------------------------------------------
 Failover через Keepalived + unicast
 sudo apt install keepalived -y
 ip a // find your network interface

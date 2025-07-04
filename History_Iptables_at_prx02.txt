@@ -1,0 +1,86 @@
+find / -name iptables
+find / -name iptables-save
+cat /usr/sbin/iptables-save
+find / -name iptables-save
+nano /usr/sbin/iptables-save
+sudo /usr/sbin/iptables-save > /tmp/iptables-save-default.conf
+chmod +x /tmp/iptables-save-default.conf
+nano /tmp/iptables-save-default.conf
+apt install iptables iptables-persistent
+sudo /usr/sbin/iptables-save > /tmp/iptables-save-default.conf
+nano /tmp/iptables-save-default.conf
+iptables -L -n -v
+iptables -L INPUT --line-numbers
+sudo iptables -F
+sudo iptables -A INPUT -i lo -j ACCEPT
+sudo iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 22 -s 172.29.31.0/24 -j ACCEPT
+sudo iptables -A INPUT -p tcp -m multiport --dports 80,443 -j ACCEPT
+sudo iptables -I INPUT -p icmp --icmp-type echo-request -s 172.29.31.0/24 -j ACCEPT
+sudo iptables -P INPUT DROP
+sudo iptables -P FORWARD DROP
+sudo iptables -P OUTPUT ACCEPT
+iptables -L -n -v
+iptables netfilter-persistent
+iptables -L -n -v
+iptables -L INPUT --line-numbers
+sudo iptables -I INPUT 1 -p icmp --icmp-type echo-request -s 172.29.31.16/28 -j ACCEPT
+iptables -L INPUT --line-numbers
+iptables -D INPUT 2
+iptables -L INPUT --line-numbers
+iptables -I INPUT 4 -p tcp --dport 22 -s 172.29.31.16/28 -j ACCEPT
+iptables -L INPUT --line-numbers
+iptables -D INPUT 5
+iptables -L INPUT --line-numbers
+iptables -L -v -n
+iptables -L INPUT --line-numbers
+iptables -I INPUT 4 -p udp -s 172.29.31.16/28 --dport 53 -J ACCEPT
+iptables -I INPUT 4 -p udp -s 172.29.31.16/28 --dport 53 -j ACCEPT
+iptables -L INPUT --line-numbers
+iptables -I INPUT 5 -p tcp -s 172.29.31.16/28 --dport 53 -j ACCEPT
+sudo iptables -L INPUT --line-numbers
+iptables -L INPUT --line-numbers
+iptables -I INPUT -p tcp -s 10.100.93.7 --dport 10050 -j ACCEPT
+iptables -L -n -v
+iptables -L INTPUT --line-numbers
+sudo iptables -L INPUT --line-numbers
+iptables -l
+iptables -L
+iptables -L INPUT --line-numbers
+sudo iptables -A INPUT -p tcp -m multiport --dports 8080 -j ACCEPT
+iptables -L INPUT --line-numbers
+sudo iptables -A INPUT -p tcp -m multiport --dports 7080 -j ACCEPT
+iptables -L INPUT --line-numbers
+sudo iptables -L -n -v
+sudo iptables -L INPUT --line-numbers
+sudo iptables -L INPUT -v -n | grep -E '7080|8080'
+sudo iptables -L INPUT -v -n | grep -E '70|80'
+iptables -L -n -v
+iptables -L FORWARD -n -v
+sudo iptables -L INPUT --line-numbers
+iptables -A FORWARD -i docker0 -o eth0 -j ACCEPT
+iptables -A FORWARD -i eth0 -o docker0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -t nat -A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE
+iptables -L FORWARD -n -v
+sudo iptables -L INPUT --line-numbers
+sudo iptables -L FORWARD --line-numbers
+iptables -A FORWARD -i docker0 -o ens192 -j ACCEPT
+sudo iptables -L FORWARD --line-numbers
+iptables -D FORWARD 3
+sudo iptables -L FORWARD --line-numbers
+iptables -D FORWARD 3
+sudo iptables -L FORWARD --line-numbers
+iptables -A FORWARD -i ens192 -o docker0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -t nat -A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE
+iptables -L FORWARD -n -v
+iptables -t nat -L POSTROUTING -n -v
+iptables -L DOCKER-USER -n -v
+iptables -I DOCKER-USER -i docker0 -o ens192 -j ACCEPT
+iptables -I DOCKER-USER -i ens192 -o docker0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -L DOCKER-USER -n -v
+sudo iptables -L -n -v
+sudo iptables -L --number -n -v
+sudo iptables -L --NUMBER -n -v
+sudo iptables -L -n -v --line-numbers
+sudo iptables -L -n -v --line-numbers
+sudo iptables -L -n -v --line-numbers

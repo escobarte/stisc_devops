@@ -1,0 +1,33 @@
+Что я умею?
+1. LVM (lsblk/fdisk/pv-vg-lv_create)
+2. NFS (настройка)
+3. 
+4. User and Groups mgmt.
+5. Dump & Tar
+6. Scripting.sh
+7. Cron 
+8. Virtual Host.conf_is important / a2dissite / php artisan
+9. .env
+10. MySQL & PostgreSQL
+11. Nginx
+  sites-available/.conf
+	Upstream / Proxy_Pass /
+  keepalived/check_nginx.sh
+  keepalived/.conf
+	 vrrp_script / unicast / VIP / track
+12. DNS
+	bind9-named / apparmour
+  named.conf.local
+  /dns/bind/file_configured
+	NS / A/ SOA
+13. Iptables (настройка) - Создай Супер Гайд + нужно больше практики
+  /etc/iptables/rules.v4
+  netfilter-persistent save
+14. 
+WAS --> /etc/nginx/sites-available/app.lab.local.conf
+NOW -> +--> /etc/nginx/sites-available/laravel.lab.local.conf
+	   |
+	   +--> /etc/nginx/sites-available/zabbix.lab.local.conf
+15. Zabbix
+16. Netplan?
+17. SSH via RSA
