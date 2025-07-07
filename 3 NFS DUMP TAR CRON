@@ -43,14 +43,16 @@
 	apt update && apt install nfs-common -y
 	mkdir -p /mnt/nfs/zabbix_client
 	mount 10.100.93.5:/srv/nfs/zabbix_backup /mnt/nfs/zabbix_client
+	#
 	df -h | grep nfs
 	touch /mnt/nfs/zabbix_client/file_to_test
+	sudo -u zabbix touch /mnt/nfs/zabbix_client/test.file
 
 5. Создаю zabbixsrv && zabbixcli. Для настройки доступов
 	#На сервере
 		getent passwd | cut -d: -f3 | sort -n | tail #Проверям чтобы 1050 был свободен
 		useradd -u 1050 -m -s /bin/bash zabbixusr
-		#так как я сделал ошибку пришлось найит юзера и сделать переименнование
+			#так как я сделал ошибку пришлось найит юзера и сделать переименнование
 			cut -d: -f1 /etc/passwd | grep zabb
 			usermod -l error_name new_name
 			#Нужно удалить и создать занного, так как неправильное имя создало непарвильную группу, и тд.
@@ -68,12 +70,17 @@
 		sudo -u zabbix touch /mnt/nfs/zabbix_client/test.file #It Works!
 		sudo -u zabbixcli bash -c 'echo "backup" > /mnt/nfs/zabbix_client/test.log' #updating file.
 
+
+
+
+
+
 ########################################################################
 База данных PostgreSQL						93.8	zabbix
 Конфиги и веб-интерфейс Zabbix				93.7	/etc/zabbix, /usr/share/zabbix, /usr/lib/zabbix, /var/log/zabbix/
 ХранилищеNFS	/mnt/nfs/zabbix_backup		Монтировано с 93.5
 
-1. Dump (Chencking Mannualy @ 93.8)
+1. Dump (Chencking Mannualy @ 93.8
 	1.1 sudo -u zabbix pg_dump zabbix | gzip | sudo -u zabbixclidb tee /mnt/nfs/zabbix_client_db/zabbix_db_$(date +%F_%H-%M).sql.gz > /dev/null
 	1.2 sudo -u zabbixclidb ls -la /mnt/nfs/zabbix_client_db/
 2. Preparing: nano /opt/dump_db_zabbix.sh
@@ -105,7 +112,8 @@
 
 3. Setting Cron
 	crontab -e
-	55 8 * * * /opt/zabbix_db_bk.sh
+	55 8 * * * /zabbix_db_bk.sh
+	55 8 * * * opt/tar-mv-del.sh
 
 4. TAR (nano /opt/tar-mv-del.sh @ 93.7)
 	#Decalaring
@@ -171,4 +179,6 @@
 	                                                     
 5. Setting Cron 
 
-#sudo -u zabbixcli ls -lh /mnt/nfs/zabbix_client | grep etc/zabbix_backup
+#sudo -u zabbixclidb ls -lh /mnt/nfs/zabbix_client_db
+ sudo -u zabbixclidb ls -lh /mnt/nfs/zabbix_client_db/
+ sudo -u zabbixcli ls -lh /mnt/nfs/zabbix_client/
