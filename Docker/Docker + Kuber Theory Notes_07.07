@@ -71,3 +71,7 @@ ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head
 systemctl status <PID>
 docker stats
 cat /proc/meminof | grep Mem
+
+bash /tmp/dockps.sh
+
+https://youtu.be/Hz7fkXQABNo?list=PL8D2P0ruohOA4Y9LQoTttfSgsRwUGWpu6&t=2132

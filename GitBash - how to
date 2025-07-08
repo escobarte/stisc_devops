@@ -6,32 +6,6 @@ Tips and tricks:
 	cat .git/config
 	git branch -M main
 	
-
-
-
-
-
-Краткое руководство: Загрузка проекта на GitHub (WSL & PAT)
-На GitHub: Создать новый, пустой репозиторий (без README). Скопировать его HTTPS URL.
-В Ubuntu WSL:
-Установка Git: sudo apt update затем sudo apt install git.
-Переход в папку проекта: cd /mnt/c/.../ВашПроект/ (важно).
-Настройка Git:
-git config --global user.name "Ваше Имя" (можно менять: повторить команду)
-git config --global user.email "ваш_email@example.com" (GitHub email)
-Инициализация Git: git init
-Подготовка файлов:
-(Опционально: переименовать файлы командой mv старое_имя новое_имя)
-git add . (для добавления/обновления всех файлов)
-(Для отмены git add: git rm --cached . -r если нет коммитов, иначе git restore --staged .)
-Первый коммит: git commit -m "Initial commit"
-Привязка к GitHub: git remote add origin [скопированный_URL_с_GitHub]
-Загрузка на GitHub: git push -u origin master
-При запросе Username: ввести логин GitHub.
-При запросе Password: ввести Personal Access Token (PAT).
-PAT: Генерируется на GitHub (Settings -> Developer settings -> Personal access tokens (classic)), нужен scope repo. Выдается один раз, сохранять обязательно! (Сохранён в Google Keep).
-Проверка: Обновить страницу репозитория на GitHub – файлы должны быть там.
-
 ====
 Итак, сокращенно:
 
