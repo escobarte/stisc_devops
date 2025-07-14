@@ -1,0 +1,45 @@
+https://www.hostinger.com/tutorials/linux-commands
+
+ls -t : sort by time
+ls -r: reverse order by alphabet
+
+ls -alh
+ls -lht /srv/nfs/zabbix_backup | grep 2025-07-08
+-rw-rw-r-- 1 zabbixsrv zabbixsrv 225M Jul  8 08:56 zabbix_db_2025-07-08_08-56.sql.gz
+
+sudo systemctl list-unit-files --type service --all
+
+
+docker rm -f $(docker ps -aq)
+docker rmi -f $(docker images -aq)
+
+cat /etc/passwd
+compgen -u 
+
+
+sudo parted /dev/sdb print free
+
+
+Created a new partition 3 of type 'Extended' and of size 42 GiB.
+
+
+
+sum by (instance) (process_cpu_seconds_total)
+
+
+root@sas-lab-prx01:/etc/nginx# find / -type d -name '*nginx*' 2>/dev/null
+/var/log/nginx
+/var/lib/nginx
+/etc/nginx
+/sys/fs/cgroup/system.slice/nginx.service
+/usr/share/doc/nginx-common
+/usr/share/doc/nginx
+/usr/share/nginx
+
+
+
+
+nano /etc/systemd/system/nginx-exporter.service
+
+
+https://github.com/grafana/loki/releases/download/v3.5.2/promtail-linux-amd64.zip

@@ -1,20 +1,24 @@
 {
   "main": {
-    "id": "9c65e0ce4bea8187",
+    "id": "3e77e98ed27f86a0",
     "type": "split",
     "children": [
       {
-        "id": "3bbd3941c2d2140d",
+        "id": "3a75c4ace1053b99",
         "type": "tabs",
         "children": [
           {
-            "id": "0495aa75f1e6710a",
+            "id": "1653b11ca034dccd",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "type": "markdown",
+              "state": {
+                "file": "Monitoring Stack.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Monitoring Stack"
             }
           }
         ]
@@ -23,15 +27,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "e0d3604ea849f0fc",
+    "id": "38c5bf03028a1a6b",
     "type": "split",
     "children": [
       {
-        "id": "ec21bc87baf60341",
+        "id": "ea83cde7c9b9db20",
         "type": "tabs",
         "children": [
           {
-            "id": "dd3140315635765f",
+            "id": "6e597e58e55c758d",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -44,7 +48,7 @@
             }
           },
           {
-            "id": "f4fdf127e5779103",
+            "id": "45cb02dc7a4d73a8",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -61,7 +65,7 @@
             }
           },
           {
-            "id": "d796507a083cbb58",
+            "id": "1fa02967365135e9",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -77,20 +81,19 @@
     "width": 300
   },
   "right": {
-    "id": "a97cae9cda231612",
+    "id": "2d998acec27e2a19",
     "type": "split",
     "children": [
       {
-        "id": "f51e10b5a73debe1",
+        "id": "3787b4c557f3b794",
         "type": "tabs",
         "children": [
           {
-            "id": "ddb73f04d0db157a",
+            "id": "ac459382b08ceb2b",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "NFS + SCRIPT + CRON.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -100,25 +103,24 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for NFS + SCRIPT + CRON"
+              "title": "Backlinks"
             }
           },
           {
-            "id": "fc8b8c7ee8fdb3ef",
+            "id": "e3a712f83c3b92e9",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "NFS + SCRIPT + CRON.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from NFS + SCRIPT + CRON"
+              "title": "Outgoing links"
             }
           },
           {
-            "id": "723931290a3fb607",
+            "id": "7bb3db8134358b7f",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -133,18 +135,17 @@
             }
           },
           {
-            "id": "235c1fbb8b2a3e01",
+            "id": "5d4ea0bd32f62e96",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "NFS + SCRIPT + CRON.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of NFS + SCRIPT + CRON"
+              "title": "Outline"
             }
           }
         ]
@@ -164,20 +165,19 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "dd3140315635765f",
+  "active": "1653b11ca034dccd",
   "lastOpenFiles": [
-    "Monitoring Stack/Welcome.md",
-    "Monitoring Stack",
-    "LVM.md",
-    "App.md",
-    "Linux Administration Intro Project.md",
-    "App01.md",
-    "Keepalive(unicastat.md",
-    "NGINX Reverse Proxy.md",
-    "Prx01.md",
-    "Pasted image 20250630091804.png",
-    "Load Balancer.md",
+    "mnt/loki_data/local-config.yaml.md",
+    "mnt/prometheus_data/prometheus.yml.md",
+    "Folder Created.md",
     "create a link.md",
-    "NFS + SCRIPT + CRON.md"
+    "Monitoring Stack.md",
+    "docker-compose.yaml.md",
+    "mnt/loki_data",
+    "mnt/Prometheus data/prometheus.yml.md",
+    "mnt/Prometheus data",
+    "mnt/prometheus_data",
+    "mnt",
+    "LVM Created.md"
   ]
 }

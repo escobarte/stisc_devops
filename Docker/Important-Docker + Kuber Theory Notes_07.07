@@ -43,11 +43,6 @@ docker run --cpus=1 mycontainer
 	Допустим, у тебя сервер с 4 ядрами.	Чтобы дать контейнеру не больше 30% CPU:
 	4 x 0.3 = 1.2 ядра / --cpus=1.2 ≈ 30% отвсех доступных ядер
 
-
-
-
-
-
 ---
 Узнай:
 Docker volume documentation
@@ -62,10 +57,6 @@ htop or top / task manager
 Сколько ядер видит ядро: cat /proc/cpuinfo | grep "cpu cores" | uniq
 — Покажет топ-10 процессов, которые больше всего используют память.
 
-
-
-
-
 !!!!! Топчик
 ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head
 systemctl status <PID>
@@ -75,3 +66,4 @@ cat /proc/meminof | grep Mem
 bash /tmp/dockps.sh
 
 https://youtu.be/Hz7fkXQABNo?list=PL8D2P0ruohOA4Y9LQoTttfSgsRwUGWpu6&t=2132
+
